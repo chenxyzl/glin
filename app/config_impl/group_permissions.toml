@@ -1,0 +1,14 @@
+#权限控制
+#权限定义
+#需要权限的功能
+#enum Access {
+#Unknown1 = 0; //未知类型
+#ChangePermissions = 1; //设置管理员权限
+#MuteOther = 2; //静音其他用户
+#}
+#普通用户
+[GroupPermissions."User"]
+Access = [] #权限列表
+#管理员
+[GroupPermissions."Admin"]
+Access = [1,2] #权限列表

@@ -1,0 +1,29 @@
+syntax = "proto3";
+package outer;
+option  go_package = "laiya/proto/outer";
+
+/*
+大厅rpc,id范围:40000~49999
+*/
+
+//获取推荐群
+message GetRecommendGroupList {
+    int32 rpcId = 40000;
+    message Request {
+        uint32 page = 1; //页
+    }
+    message Reply {
+        repeated uint64 groupIds = 1;
+    }
+}
+//搜索群
+message SearchGroup {
+    int32 rpcId = 40001;
+    message Request {
+        string strVal = 1; //搜索--(全数字则为id搜索)
+        uint32 page = 2; //页
+    }
+    message Reply {
+        repeated uint64 groupIds = 1;
+    }
+}

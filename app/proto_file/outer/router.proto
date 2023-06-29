@@ -1,0 +1,9 @@
+syntax = "proto3";
+package outer;
+option  go_package = "laiya/proto/outer";
+import "google/protobuf/descriptor.proto";
+//自定义的文件级别可选想
+extend google.protobuf.FileOptions {
+    string router = 50000;
+}
+option (router) = "api,web,share";

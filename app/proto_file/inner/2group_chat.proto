@@ -1,0 +1,29 @@
+syntax = "proto3";
+package inner;
+option  go_package = "laiya/proto/inner";
+
+import "actor/actor.proto";
+import "outer/outer_common.proto";
+
+//通知群聊天
+message NotifyGroupChatMsg {
+    message Notify {
+        uint64 senderUid = 1; //默认房主
+        outer.ChatMsg.NormalMsg chatMsg = 2;
+    }
+}
+//通知群活动聊天
+message NotifyGroupActivityInfo {
+    message Notify {
+        uint64 senderUid = 1; //默认房主
+        outer.ChatMsg.GroupActivityMsg activityInfo = 2;
+    }
+}
+//活动插件通知群邀请上麦
+message NotifyGroupInviteOnMic {
+    message Notify {
+        uint64 senderUid = 1; //默认房主
+        string activityTitle = 2;
+        repeated uint64 uids = 3;
+    }
+}

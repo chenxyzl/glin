@@ -1,0 +1,140 @@
+syntax = "proto3";
+package outer;
+option  go_package = "laiya/proto/outer";
+
+/*
+web的rpc,id范围:20000-20999
+*/
+
+//获取验证码
+message GetCaptcha {
+    int32 rpcId = 20000;
+    message Request {
+        string ph = 1;
+    }
+    message Reply {}
+}
+
+//web登录返回的用户数据
+message WebLoginUseInfo{
+    enum State {
+        Unknown = 0; //未知
+        Registered = 1; // 已注册用户
+        New = 2; // 新用户
+        Old = 3; // 继承用户--登录成功后会变为 Registered
+    }
+    message UserInfo {
+        uint64 uid = 1;
+        string name = 2;
+        string icon = 3;
+        string des = 4; //用户描述
+        State state = 5; //用户状态
+    }
+}
+
+//校验验证码
+message CheckCaptcha {
+    int32 rpcId = 20001;
+    message Request {
+        string ph = 1;
+        string captcha = 2;
+    }
+    message Reply {
+        string token = 1;
+        WebLoginUseInfo.UserInfo userInfo = 2;
+    }
+}
+
+//校验token
+message CheckToken {
+    int32 rpcId = 20003;
+    message Request {
+        int64 protoVersion = 1; //客户端协议版本号--
+    }
+    message Reply {}
+}
+
+//上传Icon
+message UploadIcon {
+    int32 rpcId = 20004;
+    enum IconType {
+        Unknown = 0; //未知
+        Head = 1; //头像
+        GroupHead = 2; //群头像
+        ChatPic = 3; //聊天图片
+    }
+    //http的body格式为form-data
+    //type字段值为Head GroupHead 等IconType
+    //icon字段为上传的文件
+    message Request {}
+    message Reply {
+        string url = 1;
+    }
+}
+
+//获取游戏类型
+message GetGameTypes {
+    int32 rpcId = 20005;
+    message Request {}
+    message Reply {
+        repeated string gameTypes = 1;
+    }
+}
+
+//
+message DeleteAccount {
+    int32 rpcId = 20006;
+    message Request {
+        uint64 uid = 1;
+    }
+    message Reply {}
+}
+
+//客户端版本号检查
+message CheckClientVersion {
+    int32 rpcId = 20010;
+    message Request {
+        string clientVersion = 1;
+    }
+    message Version {
+        string version = 1; //版本号
+        string title = 2; //新版本标题
+        string detail = 3; //新版本详情
+    }
+    message Reply {
+        bool versionAvailable = 1; //false表示当前版本已经废弃
+        Version lastVersion = 2; //有新版本时候有值
+    }
+}
+
+//获取机器人信息
+message GetRobotInfo {
+    int32 rpcId = 20020;
+    message RobotInfo {
+        uint64 uid = 1;
+        string name = 2;
+        string icon = 3;
+        string des = 4; //用户描述
+    }
+    message Request {
+        uint64 uid = 1;
+    }
+    message Reply {
+        RobotInfo robotInfo = 1;
+    }
+}
+
+//增加或修改机器人信息
+message UpdateRobotInfo {
+    int32 rpcId = 20021;
+    message RobotInfo {
+        uint64 uid = 1;
+        string name = 2;
+        string icon = 3;
+        string des = 4; //用户描述
+    }
+    message Request {
+        RobotInfo robotInfo = 1;
+    }
+    message Reply {}
+}

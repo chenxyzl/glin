@@ -1,0 +1,48 @@
+syntax = "proto3";
+package outer;
+option  go_package = "laiya/proto/outer";
+
+/*
+不用授权的配置类的rpc,id范围:91000-91999
+*/
+
+//获取第三方平台信息的配置
+message GetThirdPlatformConfig {
+    int32 rpcId = 91000;
+    message ThirdPlatform{
+        int32 id = 1; //id映射
+        string name = 2; //平台名字
+        string icon = 3; //icon
+        int32 sortIdx = 4; //排序索引
+    }
+    message Request {
+    }
+    message Reply {
+        map<int32,ThirdPlatform> thirdPlatformConfig = 1;
+    }
+}
+//获取大厅的Banners
+message GetHallBannersConfig {
+    int32 rpcId = 91001;
+    message Banner{
+        string name = 1; //名字
+        string des = 2; //描述
+        string icon = 3; //icon
+        string link = 4; //链接
+    }
+    message Request {
+    }
+    message Reply {
+        repeated Banner banners = 1;
+    }
+}
+//获取客户端动态配置
+message GetClientDynamicConfig {
+    int32 rpcId = 91002;
+    message Request {
+        string key = 1;
+    }
+    message Reply {
+        string value = 2;
+    }
+}

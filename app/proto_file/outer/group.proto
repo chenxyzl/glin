@@ -1,0 +1,395 @@
+syntax = "proto3";
+package outer;
+option  go_package = "laiya/proto/outer";
+import "outer/outer_common.proto";
+import "common/common.proto";
+
+/*
+群的rpc,id范围:30000~39999
+*/
+
+//获取群卡片信息--名片信息
+message GetGroupCard {
+    int32 rpcId = 30000;
+    message Request {
+        uint64 gid = 1; //群id
+    }
+    message Reply {
+        GroupCard groupCard = 1; //群名片信息
+    }
+    //群卡片信息--大厅中显示,如搜索页推荐页
+    message GroupCard {
+        uint64 gid = 1; //群id
+        uint64 ownerUid = 2; //拥有者uid
+        string name = 3; //群名字
+        string icon = 4; //icon
+        string des = 5; //群描述
+        string gameType = 6; //游戏类型
+        repeated uint64 onMicPlayers = 7; //正在语音的用户
+        bool isOfficial = 8; //是否官方群
+        repeated uint64 screenSharingUids = 9; //群内屏幕共享的用户
+    }
+}
+
+//获取群详情
+message GetGroupDetail{
+    int32 rpcId = 30001;
+    //游戏问昂
+    message GuideCopyWriting {
+        string onMicPlayer0Guide = 1; //无人上麦的文案
+        string onMicPlayer1Guide = 2; //有人上麦的文案
+    }
+    message Group {
+        uint64 gid = 1; //群id
+        uint64 ownerUid = 2; //拥有者的uid
+        string name = 4; //群名
+        string icon = 5; //icon
+        string des = 6; //群介绍
+        string gameType = 7; //游戏类型
+        repeated uint64 players = 8; //用户id列表--根据用户id去获取用户数据--服务器排序了的
+        uint32 onlineCount = 9;//在线人数
+        repeated uint64 onMicPlayers = 10; //正在语音的用户
+        bool isOfficial = 11; //是否官方群
+        bool joinAccess = 12; //加入权限
+        GuideCopyWriting guideCopyWriting = 13; //引导文案
+        string voiceRoomName = 14; //语言房名字
+        map<uint64,common.GroupPermissionsDef.Type> permissions= 15; //权限类型>
+        repeated uint64 screenSharingUids = 16; //群内屏幕共享的用户
+    }
+    message Request {
+        uint64 gid = 1; //群id
+    }
+    message Reply {
+        Group group = 1; //群信息
+    }
+}
+//创建群
+message CreateGroup{
+    int32 rpcId = 30002;
+    message Request {
+        string name = 1; //名字
+        string icon = 2; //icon
+        string des = 3; //介绍
+        string gameType = 4; //游戏类型
+    }
+    message Reply {
+        uint64 gid = 1; //群id
+    }
+}
+//收藏群
+message FavoriteGroup{
+    int32 rpcId = 30003;
+    message Request {
+        uint64 gid = 1; //群id
+    }
+    message Reply {}
+}
+//取消搜藏/删除群
+message UnfavoriteGroup{
+    int32 rpcId = 30004;
+    message Request {
+        uint64 gid = 1; //群id
+    }
+    message Reply {}
+}
+//解散群
+message DisbandGroup{
+    int32 rpcId = 30005;
+    message Request {
+        uint64 gid = 1; //群id
+    }
+    message Reply {}
+}
+//进入群
+//注:Enter群是获得群的详细信息,Favorite群是加入到自己的房间列表
+//注:只有Enter群才能获得群的推送
+//注:同一时间只能进入一个
+message EnterGroup{
+    int32 rpcId = 30006;
+    message Request {
+        uint64 gid = 1; //群id
+    }
+    message Reply {}
+}
+//暂离群
+//注:Unfavorite是永久离开且从收藏列表删除,Exit是当前暂离且无法收到不在时候的部分推送
+//注:只有Enter群才能获得群的推送
+//注:同一时间只能进入一个
+message ExitGroup{
+    int32 rpcId = 30007;
+    message Request {
+        uint64 gid = 1; //群id
+    }
+    message Reply {}
+}
+//更新群信息
+message UpdateGroupInfo {
+    int32 rpcId = 30008;
+    enum Type {
+        unknown = 0; //未知
+        Name = 1; //名字
+        Icon = 2; //icon
+        Des = 3; //描述
+        GameType = 4; //游戏类型
+    }
+    message Item {
+        Type type = 2; //更新类型
+        string strVar = 3; //string类型的设置这个
+    }
+    message Request {
+        uint64 gid = 1; //群id
+        repeated Item items = 2; //修改项
+    }
+    message Reply {}
+}
+//批量获取用户信息
+message GetGroupUserInfo {
+    int32 rpcId = 30009;
+    message Player {
+        uint64 uid = 1;
+        string name = 2;
+        string icon = 3; //icon
+        string des = 4;
+        bool isOnline = 5; //
+        common.UserDef.UserType userType = 6; //身份类型
+//        common.GroupPermissionsDef.Type permissions= 7; //权限类型
+    }
+    message Request {
+        uint64 gid = 1; //群id
+        repeated uint64 uids = 2; //不能超过20个,如果用户不是这个群的。则会对应的数组值为null
+    }
+    message Reply {
+        repeated Player players = 1;
+    }
+}
+//发送群聊
+message SendGroupChatMsg {
+    int32 rpcId = 30011;
+    message Request {
+        uint64 uid = 1; //发送者的id--客户端不用设置
+        uint64 gid = 2; //发送给谁 私聊则是好友id,群类型则是群id
+        string content = 3; //文本内容[生效条件-MsgType.Normal|MsgType.UnknownMsgType]
+        repeated uint64 atUids = 4; //@的对象,1表示@所有人，例子[1,aaa,bbb],包含了单个1，就表示@了所有人
+        string url = 5; //图片地址[生效条件-MsgType.Pic]
+        //内容类型放最后
+        ChatMsg.MsgType msgType = 100; //消息类型~
+    }
+    message Reply {}
+}
+//推送聊天消息
+message PushChatMsg {
+    int32 rpcId = 30012;
+    message Push {
+        repeated ChatMsg msgList = 1; //消息列表
+    }
+}
+//获取群消息
+message GetGroupChatMsg {
+    int32 rpcId = 30013;
+    message Request {
+        uint64 gid = 1; //群id
+        uint64 beginId = 2; //获取这条消息之后的10条消息。如果为0则为最新的10条消息
+    }
+    message Reply {
+        repeated ChatMsg msgList = 1; //消息列表
+    }
+}
+//获取分享接口的卡片信息
+message GetShareGroupCard {
+    int32 rpcId = 30014;
+    message Request {
+        uint64 gid = 1; //群id
+    }
+    message Reply {
+        GroupCard groupCard = 1; //群名片信息
+    }
+    //群卡片信息--大厅中显示,如搜索页推荐页
+    message GroupCard {
+        message Player {
+            uint64 uid = 1; //用户id
+            string name = 2; //名字
+            string icon = 3; //icon
+            string des = 4; //des
+        }
+        uint64 gid = 1; //群id
+        uint64 ownerUid = 2; //拥有者uid
+        string name = 3; //群名字
+        string icon = 4; //icon
+        string des = 5; //群描述
+        string gameType = 6; //游戏类型
+        uint32 onlineCount = 7; //在线人数
+        uint32 playerCount = 8; //拥有成员数量
+        repeated Player players = 9; //在线角色头像--只返回前4个
+        bool isOfficial = 10; //是否官方群
+        bool joinAccess = 11; //加入权限
+    }
+}
+//推送群解散--只推送给当前在群的
+message PushGroupDisband {
+    int32 rpcId = 30020;
+    message Push {
+        uint64 gid = 1; //
+    }
+}
+//推送在线--只推送给当前在群的人员
+message PushGroupPlayerOnline{
+    int32 rpcId = 30021;
+    message Push {
+        repeated uint64 uids = 1; //玩家列表
+    }
+}
+//推送下线--只推送给当前在群的人员
+message PushGroupPlayerOffline{
+    int32 rpcId = 30022;
+    message Push {
+        repeated uint64 uids = 1; //玩家列表
+    }
+}
+//推送进入群--只推送给当前在群的人员
+message PushGroupPlayerEnter{
+    int32 rpcId = 30023;
+    message Push {
+        repeated uint64 uids = 1; //玩家列表
+    }
+}
+//推送离开群--只推送给当前在群的人员
+message PushGroupPlayerExit{
+    int32 rpcId = 30024;
+    message Push {
+        repeated uint64 uids = 1; //玩家列表
+    }
+}
+//更新群的权限-是否允许加入
+message UpdateGroupJoinAccess {
+    int32 rpcId = 30025;
+    message Request {
+        uint64 gid = 1;
+        bool joinAccess = 2; //加入权限~之前的命令都是Favorite。这里需要注意
+    }
+    message Reply {}
+}
+//推送用户收藏群--只推送给当前在群的人员
+message PushGroupPlayerFavorite{
+    int32 rpcId = 30026;
+    message Push {
+        repeated uint64 uids = 1; //玩家列表
+    }
+}
+//推送用户取消收藏群--只推送给当前在群的人员
+message PushGroupPlayerUnfavorite{
+    int32 rpcId = 30027;
+    message Push {
+        repeated uint64 uids = 1; //玩家列表
+    }
+}
+//语音状态变化-上麦下麦状态变化--老版本上麦要触发摇人-
+message GroupVoiceStateChange {
+    int32 rpcId = 30030;
+    message Request {
+        uint64 gid = 1;
+        uint64 uid = 2; //客户端不用设置
+    }
+    message Reply {
+        repeated uint64 onmicPlayers = 1; //在麦用户
+    }
+}
+//获取语音的token
+message GetGroupVoiceToken {
+    int32 rpcId = 30031;
+    message Request {
+        uint64 gid = 1;
+        uint64 uid = 2; //客户端不用设置
+    }
+    message Reply {
+        string voiceToken = 1;
+    }
+}
+//修改语音房间名字
+message SetGroupVoiceName{
+    int32 rpcId = 30032;
+    message Request {
+        uint64 uid = 1; //客户端不用设置
+        uint64 gid = 2;
+        string voiceRoomName = 3; //语音房间名字
+    }
+    message Reply {}
+}
+//推送广播语音房名字
+message PushGroupVoiceNameChange{
+    int32 rpcId = 30033;
+    message Push {
+        uint64 gid = 1;
+        string voiceRoomName = 2; //语音房间名字
+        //    bool isResetDefault = 3; //是否是恢复为默认名字
+    }
+}
+//语音状态变化-上麦下麦状态变化
+//v1:只是通知改变
+message GroupVoiceStateChangeV1 {
+    int32 rpcId = 30034;
+    message Request {
+        uint64 gid = 1;
+        uint64 uid = 2; //客户端不用设置
+    }
+    message Reply {
+        repeated uint64 onmicPlayers = 1; //在麦用户
+    }
+}
+//所有麦上用户静音
+message MuteAllMic {
+    int32 rpcId = 30035;
+    message Request {
+        uint64 gid = 1;
+        uint64 uid = 2; //客户端不用设置
+    }
+    message Reply {}
+}
+//单个麦上用户静音
+message MuteUserMic {
+    int32 rpcId = 30036;
+    message Request {
+        uint64 gid = 1;
+        uint64 uid = 2; //客户端不用设置
+        uint64 targetUid = 3; //静音目标的uid
+    }
+    message Reply {}
+}
+//设置用户的权限类型
+message ChangeGroupUserPermissions {
+    int32 rpcId = 30037;
+    message Request {
+        uint64 gid = 1;
+        uint64 uid = 2; //客户端不用设置
+        uint64 targetUid = 3; //目标的uid
+        common.GroupPermissionsDef.Type permissions = 4; //设置用户的权限类型
+    }
+    message Reply {}
+}
+//推送用户的权限变更
+message PushGroupUserPermissionsChange{
+    int32 rpcId = 30038;
+    message Push {
+        uint64 gid = 1;
+        uint64 opUid = 2; //操作用户
+        uint64 targetUid = 3; //目标的uid
+        common.GroupPermissionsDef.Type permissions = 4; //用户的权限类型
+    }
+}
+////请求屏幕共享---和语音一样所以这里就不需要了
+//message ScreenSharing {
+//    int32 rpcId = 30039;
+//    message Request {
+//        uint64 gid = 1;
+//        uint64 uid = 2; //客户端不用设置
+//    }
+//    message Reply {}
+//}
+//推送房间内语音和共享屏幕用户的uid变化
+message PushLivekitRoomChange{
+    int32 rpcId = 30040;
+    message Push {
+        uint64 gid = 1;
+        repeated uint64 onMicPlayers = 2; //群内语音人数
+        repeated uint64 screenSharingUids = 3; //群内屏幕共享的用户
+    }
+}

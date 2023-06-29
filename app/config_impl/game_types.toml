@@ -1,0 +1,40 @@
+#游戏列表
+GameTypes = [
+    "胡闹厨房2/全都好吃",
+    "动物派对",
+    "速速上菜",
+    "双人成行",
+    "APEX",
+    "瓦罗兰特",
+    "逆水寒",
+    "动物森友会",
+    "蛋仔派对",
+    "泰拉瑞亚",
+    "以撒的结合",
+    "饥荒",
+    "暗黑",
+    "鹅鸭杀",
+    "人类一败涂地",
+    "星露谷物语",
+    "塞尔达传说",
+    "只只大冒险",
+    "LOL",
+    "Switch游戏",
+    "PS游戏",
+    "XBOX游戏",
+    "其他",
+]
+
+#游戏参数
+#默认配置-----没配置的游戏默认都走这个
+[GameParams."其他"]
+FullPlayerCount = 2 #满局人数
+PlayerCountWeight = { }
+#厨房特有配置
+[GameParams."胡闹厨房2/全都好吃"]
+FullPlayerCount = 4 #满局人数
+PlayerCountWeight = { 1 = 10, 2 = 6, 3 = 1 }
+#动物派对特有配置
+[GameParams."动物派对"]
+FullPlayerCount = 8 #满局人数
+PlayerCountWeight = { }

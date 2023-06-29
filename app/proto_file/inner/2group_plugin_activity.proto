@@ -1,0 +1,12 @@
+syntax = "proto3";
+package inner;
+option  go_package = "laiya/proto/inner";
+
+import "actor/actor.proto";
+
+//用户离开群
+message Gr2AcPlayerUnfavoriteGroup {
+    message Notify {
+        uint64 uid = 1;
+    }
+}

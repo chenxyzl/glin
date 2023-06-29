@@ -1,0 +1,10 @@
+#游戏平台类型
+[PlatformTypesTmp."1"]
+Name = "steam"
+Icon = "https://xxx/1.0.0/icons/steam.png"
+Idx = 1 #排序索引
+#游戏平台类型
+[PlatformTypesTmp."2"]
+Name = "switch"
+Icon = "https://xxx/1.0.0/icons/switch.png"
+Idx = 2 #排序索引

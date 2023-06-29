@@ -1,0 +1,46 @@
+syntax = "proto3";
+package outer;
+option  go_package = "laiya/proto/outer";
+
+import "code/code.proto";
+
+//请求
+message ReqPack {
+    uint64 sn = 1; //流水号 request/reply
+    int32 rpcId = 2; //rpcId all
+    bytes data = 4; //消息体 all
+}
+//请求--json版本
+message ReqJsonPack {
+    uint64 sn = 1; //流水号 request/reply
+    int32 rpcId = 2; //rpcId all
+    string data = 4; //消息体 all
+}
+//应答
+message RspPack {
+    uint64 sn = 1; //流水号 request/reply
+    int32 rpcId = 2; //rpcId all
+    code.Code code = 3; //错误码 reply
+    bytes data = 4; //消息体 all
+    string msg = 5; //错误消息,可能有
+}
+//应答--json版本
+message RspJsonPack {
+    uint64 sn = 1; //流水号 request/reply
+    int32 rpcId = 2; //rpcId all
+    code.Code code = 3; //错误码 reply
+    string data = 4; //消息体 all
+    string msg = 5; //错误消息,可能有
+}
+//http回复
+message HttpReply {
+    code.Code code = 1; //错误码 reply
+    bytes data = 2; // 正确回复时候的消息体
+    string msg = 3; // 错误回复时候的提示
+}
+//推送--服务器通知gateway给session的push消息
+message PushPack {
+    uint64 sn = 1; //流水号 request/reply
+    int32 rpcId = 2; //rpcId all
+    bytes data = 4; //消息体--
+}

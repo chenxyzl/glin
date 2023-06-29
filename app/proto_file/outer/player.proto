@@ -1,0 +1,194 @@
+syntax = "proto3";
+package outer;
+option  go_package = "laiya/proto/outer";
+import "outer/outer_common.proto";
+import "common/common.proto";
+
+/*
+用户rpc,id范围:10000~19999
+*/
+
+//心跳
+message Heartbeat {
+  int32 rpcId = 10000;
+  message Request {}
+  message Reply {}
+}
+
+//获取用户数据
+message GetUserInfo {
+  int32 rpcId = 10001;
+  message Request {}
+  message Reply {
+    PlayerInfo playerInfo = 1; //自己的玩家信息
+  }
+  message LastChatId {
+    map<uint64, uint64> lastGroupChatId = 1; //群id-最近一次群消息id 注:只会推送这之后的聊天内容(0值表示不推送历史消息)
+    uint64 lastPrivateChatId = 2; //最近一次私聊的消息id 注:只会推送这之后的聊天内容(0值表示不推送历史消息)
+  }
+  message  PlayerInfo {
+    uint64 uid = 1; //uid
+    string name = 2; //名字
+    string icon = 3; //icon
+    string des = 4; //描述
+    repeated uint64 friendIds = 5; //拥有的好友Id
+    repeated uint64 groupIds = 6; //全部的的群Id
+    repeated uint64 selfGroupIds = 7; //自己拥有的群Id
+  }
+}
+
+//设置用户信息
+message SetUserInfo {
+  int32 rpcId = 10002;
+  message Request {
+    string name = 1; //名字
+    string icon = 2; //icon
+    string des = 3; //介绍
+  }
+  message Reply {}
+}
+
+//推送踢人消息
+message PushKick {
+  int32 rpcId = 10003;
+  //踢下线原因
+  enum Reason {
+    UnKnown = 0;
+    LoginElsewhere = 1; //在其他地方登录
+  }
+  message Push {
+    Reason reason = 1;
+  }
+}
+
+//更新用户信息
+message UpdateUserInfo {
+  int32 rpcId = 10004;
+  enum Type {
+    Unknown = 0; //未知
+    Name = 1; //名字
+    Icon = 2; //icon
+    Des = 3; //描述
+  }
+  message Item {
+    Type type = 2; //更新类型
+    string strVar = 3; //string类型的设置这个
+  }
+  message Request {
+    //        repeated Item items = 1;
+    Type type = 1; //更新类型
+    string strVar = 2; //string类型的设置这个
+  }
+  message Reply {}
+}
+
+//获取用户的卡片信息
+message GetUserCard {
+  int32 rpcId = 10005;
+  message Request {
+    uint64 redirectUid = 1; //目标uid--这种表示A用户请求B用户接口的特殊情况
+  }
+  message Reply {
+    Player player = 1; //用户信息
+  }
+  message Player{
+    uint64 uid = 1;
+    string name = 2;
+    string icon = 3;
+    string des = 4;
+    bool isOnline = 5;
+    common.UserDef.UserType userType = 6; //身份类型
+  }
+}
+
+//状态同步检查
+message CheckSync {
+  int32 rpcId = 10006;
+  message Request {}
+  message Reply {
+    map<uint64, uint64> groupsMaxChatId = 1; //群聊天最大id
+    map<uint64, uint64> privateMaxChatId = 2; //私聊的最大id
+  }
+}
+//更新用户第三方账号信息
+message UpdateThirdPlatformInfo {
+  int32 rpcId = 10008;
+  //一次只允许更新一个
+  message Request {
+    int32 id = 1; //平台id
+    string code = 2; //账号好友码之类
+  }
+  message Reply {}
+}
+
+//获取用户的详细的卡片信息
+message GetUserCardDetail {
+  int32 rpcId = 10009;
+  message Request {
+    uint64 redirectUid = 1; //目标uid--这种表示A用户请求B用户接口的特殊情况
+  }
+  message Reply {
+    Player player = 1; //用户信息
+  }
+  message Player{
+    uint64 uid = 1;
+    string name = 2;
+    string icon = 3;
+    string des = 4;
+    bool isOnline = 5;
+    common.UserDef.UserType userType = 6; //身份类型
+  }
+}
+//用户同步服务器当前所在状态
+message SyncUserState{
+  int32 rpcId = 10010;
+  enum StateType {
+    Unknown = 0;
+    CanRecvInviteBroadcast = 1; //可以接受摇人广播
+  }
+  message Request {
+    uint64 uid = 1; //客户端不用设置
+    repeated int32 activityStateId = 2; //活跃的状态id
+  }
+  message Reply {}
+}
+//推送摇人广播
+message PushInviteBroadcast {
+  int32 rpcId = 10011;
+  message Push{
+    uint64 gid = 1;
+  }
+}
+//获取第三方平台信息
+message GetThirdPlatformInfo{
+  int32 rpcId = 10012;
+  message Request {
+    uint64 redirectUid = 1; //目标uid--这种表示A用户请求B用户接口的特殊情况
+  }
+  message Reply {
+    map<int32, string> thirdPlatformAccount = 1; //第三方平台账号信息
+  }
+}
+//发送私聊消息
+message SendPrivateChatMsg {
+  int32 rpcId = 10013;
+  message Request {
+    uint64 targetUid = 1; //目标uid--这种表示A用户请求B用户接口的特殊情况
+    string content = 2; //文本内容[生效条件-MsgType.Normal|MsgType.UnknownMsgType]
+    string url = 3; //图片地址[生效条件-MsgType.Pic]
+    //内容类型放最后
+    ChatMsg.MsgType msgType = 100; //消息类型~
+  }
+  message Reply {}
+}
+//获取私聊消息
+message GetPrivateChatMsg {
+  int32 rpcId = 10014;
+  message Request {
+    uint64 targetUid = 1; //目标uid--这种表示A用户请求B用户接口的特殊情况
+    uint64 beginId = 2; //获取这条消息之后的10条消息。如果为0则为最新的10条消息
+  }
+  message Reply {
+    repeated ChatMsg msgList = 1; //消息列表
+  }
+}

@@ -1,0 +1,34 @@
+# toml configure file
+# toml中key的首字母可以小写，但是对应的golang中的struct成员首字母必须大写
+AppKey = "xxx@1692449108" #--warning 切换
+TokenExpireTime="2160h" #90*24h
+
+#pprof端口
+PprofPort =  {"home"=11901, "web"=11902,  "hall"=11903, "group"=11904, "gate"=11905, "wechat"=11906}
+
+#语音服务相关
+[Livekit]
+Host =  "wss://rtc1.xxx.com"
+ApiKey = "xxx"
+ApiSecret = "xxx"
+
+#web节点的http
+[WebHttpParam]
+Host = "0.0.0.0"
+Port = "11202"
+#gate的websocket
+[WsParam]
+Host = "0.0.0.0"
+Port = "11301"
+Path = "/room"
+WriteTimeout = "1s"
+
+#当前的db --warning 切换
+[Mongo]
+Url = "mongodb+srv://acount:pwd@xxx/?retryWrites=true&w=majority"
+DbName = "laiya_v1_dev"
+
+#老版本的db --warning 切换
+[OldMongo]
+Url = "mongodb+srv://acount:pwd@xxx/?retryWrites=true&w=majority"
+DbName = "laiya_old_dev"

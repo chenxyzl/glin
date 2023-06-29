@@ -1,0 +1,17 @@
+#参数
+ContinuityNotifyTimes = 20 #最大连续广播次数
+LookingGroupCount = 5 #单次最多查找的房间数量
+NotifyGroupCount = 15 #广播群个数
+VoiceSyncCheckInterval = 10 #语音同步检查时间~临时解决多端登录后的语音不同步问题
+WechatInviteBroadcastInterval = "30m" #发布摇人邀请间隔
+CheckInviteBroadcastLookingGroupCount = 100 #最多查询100符合的群--不要轻易改--需要服务器开发确认
+CheckInviteBroadcastTimeInterval = "1m" #摇人功能检查间隔
+CheckInviteBroadcastHeartbeatTimeout = "65s" #摇人客户端状态超时时间
+InviteBroadcastImCopywritingInterval = "100ms" #邀请的im文案发送间隔
+HallNotifyTimeInterval = "50m" #全局广播间隔时间~注意需要加上下面的波动时间
+HallNotifyTimeIntervalRange = "20m" #全局广播间隔时间波动时间
+AllNotifyBeginHour = 11 #频道列表广播从几点开始
+AllNotifyEndHour = 24 #频道列表广播到几点结束
+PlayerDefaultGameType = "胡闹厨房2/全都好吃" #用户默认感兴趣的游戏类型
+LookingNotifyWaitingTime = "30s" #微信群邀请在麦上等待的时间--老版本上麦邀请接口
+KOLStartTag = "·" #KOL群特殊标记

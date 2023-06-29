@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket 测试页面</title>
+    <script>
+        var ws = null;
+        function connect() {
+            // 连接 WebSocket 服务器
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjkyMjMzNzIwMzY4NTQ3NzU4MDcsImV4cCI6MTY5NzQ2ODQyM30.fm70-5ofsRQNSytOMQZe6-dvn8uYPkqESwShMEYX0o0";
+            ws = new WebSocket("ws://127.0.0.1:11301/room?token="+token);
+            ws.binaryType = "arraybuffer";
+            // 监听连接成功事件
+            ws.onopen = function() {
+                console.log("WebSocket 连接成功");
+            };
+            // 监听消息接收事件
+            ws.onmessage = function(event) {
+                console.log(event.data);
+            };
+        }
+        function send() {
+            // 从文件选择器中选择文件
+            var input = document.createElement("input");
+            input.type = "file";
+            input.onchange = function(event) {
+                // 读取选中的文件并发送给服务器
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var data = event.target.result;
+                    ws.send(data);
+                };
+                reader.readAsArrayBuffer(file);
+            };
+            input.click();
+        }
+    </script>
+</head>
+<body>
+<button onclick="connect()">连接</button>
+<button onclick="send()">发送文件</button>
+</body>
+</html>

@@ -1,0 +1,65 @@
+syntax = "proto3";
+package inner;
+option  go_package = "laiya/proto/inner";
+
+import "actor/actor.proto";
+import "common/common.proto";
+import "outer/outer_common.proto";
+
+//session建立
+message C2HoSessionOnline {
+    message Request {
+        actor.PID session = 1;
+        common.LoginPlatformType loginPlatformType= 2;
+    }
+    message Reply {}
+}
+//session断开
+message C2HoSessionOffline {
+    message Request {
+        actor.PID session = 1;
+        common.LoginPlatformType loginPlatformType= 2;
+    }
+    message Reply {}
+}
+//session心跳
+message C2HoSessionHeartbeat {
+    message Request {
+        actor.PID session = 1;
+        common.LoginPlatformType loginPlatformType= 2;
+    }
+    message Reply {}
+}
+//删除用户
+message Web2HoDeletePlayer {
+    message Request {}
+    message Reply {
+        string account = 1;
+    }
+}
+//群解散了
+message Gr2HoGroupDisband {
+    message Request {
+        uint64 gid = 1;
+    }
+    message Reply {}
+}
+//订阅群激活
+message GroupActiveEvent {
+    message Notify {
+        uint64 gid = 1;
+    }
+}
+//发送私聊
+message SendPrivateChatMsg {
+    message Request {
+        uint64 senderUid = 1; //发送者
+        string senderName = 2; //发送者名字
+        uint64 uuid = 3; //
+        string content = 4; //文本内容[生效条件-MsgType.Normal|MsgType.UnknownMsgType]
+        string url = 5; //图片地址[生效条件-MsgType.Pic]
+        //内容类型放最后
+        outer.ChatMsg.MsgType msgType = 100; //消息类型~
+    }
+    message Reply {}
+}

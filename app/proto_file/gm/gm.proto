@@ -1,0 +1,13 @@
+syntax = "proto3";
+package gm;
+option  go_package = "laiya/proto/gm";
+
+//查询账号对应的uid
+message GetUidByAcc {
+    message Request {
+        string account = 1;
+    }
+    message Reply {
+        uint64 uid = 1;
+    }
+}

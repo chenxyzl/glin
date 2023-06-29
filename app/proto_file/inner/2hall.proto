@@ -1,0 +1,53 @@
+syntax = "proto3";
+package inner;
+option  go_package = "laiya/proto/inner";
+
+//更新群信息
+message Gr2HaUpdateGroup {
+    message Request {
+        uint64 gid = 1;
+        string name = 2;
+        string voiceRoomName = 3;
+        string gameType = 4;
+        uint64 sortScore = 5;
+        uint64 tempVoiceRoomVersion = 6; //临时的语音房间版本,用于过滤重复的摇人--垃圾需求的临时实现
+    }
+    message Reply {}
+}
+//删除群
+message Gr2HaDeleteGroup {
+    message Request {
+        uint64 gid = 1;
+    }
+    message Reply {}
+}
+
+//查找合适的群--可进入的
+message We2HaLookingGroupAvailable {
+    message Group {
+        uint64 gid = 1;
+        string groupName = 2;
+        string voiceRoomName = 3;
+        int32 onMicPlayerCount = 4;
+    }
+    message Request {
+        string gameType = 1; //游戏类型
+    }
+    message Reply {
+        repeated Group groups = 1;
+    }
+}
+//用户上线
+message Ho2HaCheckInviteBroadcast {
+    message Request {
+        string gameType = 1; //游戏类型
+    }
+    message MatchGroup {
+        uint64 gid = 1; //群id
+        uint32 playerCount = 2; //人数
+        uint64 tempVoiceRoomVersion = 3; //临时的语音房间版本,用于过滤重复的摇人--垃圾需求的临时实现
+    }
+    message Reply {
+        repeated MatchGroup matchGroups = 1;
+    }
+}

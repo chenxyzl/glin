@@ -1,0 +1,6 @@
+#游戏平台类型
+Banners = [
+    # 配置示例 { Name = "测试title", Des = "测试描述", Icon = "https://laiyaapp-ml-res.oss-rg-china-mainland.aliyuncs.com/1.0.0/icons/steam.png", Link = "https://www.laiyaplaygame.com" },
+    # Icon 展示图片，link 点击图片跳转的连接，其他参数目前没用随便填写
+    { Name = "测试title", Des = "测试描述", Icon = "https://img2.baidu.com/it/u=1997719007,1546620278&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=226", Link = "https://mp.weixin.qq.com/s/rxcRnHjMbO2XDSBQG2oXFw" },
+]

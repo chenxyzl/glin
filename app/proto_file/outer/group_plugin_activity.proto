@@ -1,0 +1,142 @@
+syntax = "proto3";
+package outer;
+option  go_package = "laiya/proto/outer";
+import "outer/outer_common.proto";
+import "common/common.proto";
+
+/*
+群插件活动的rpc,id范围:100100~100199
+*/
+//群活动摘要信息
+message GroupActivitySummary {
+    uint64 activityId = 1; //活动id
+    string activityTitle = 2; //活动标题
+    string activityDes = 3; //活动描述
+    int64 beginTime = 4; //开始的时间戳
+    int64 endTime = 5; //结束的时间戳
+    uint64 ownerUid = 6;//创建者
+}
+//获取活动列表
+message GetGroupAllActivity {
+    int32 rpcId = 100100;
+    message Request {
+        uint64 uid = 1; //发送者的id--客户端不用设置
+        uint64 gid = 2; //群id
+        bool onlySelf = 3; //是否仅仅获取自己参与的
+    }
+    message Reply {
+        repeated GroupActivitySummary activities = 1;
+    }
+}
+//获取活动详情
+message GetGroupActivityDetail {
+    int32 rpcId = 100101;
+    message GroupActivityDetail {
+        message Player {
+            uint64 uid = 1; //报名的uid
+            string remark = 2; //备注信息
+        }
+        uint64 activityId = 1; //活动id
+        string activityTitle = 2; //活动标题
+        string activityDes = 3; //活动描述
+        int64 beginTime = 4; //开始的时间戳
+        int64 endTime = 5; //结束的时间戳
+        uint64 ownerUid = 6;//创建者
+        repeated Player players = 7; //报名信息
+    }
+    message Request {
+        uint64 gid = 1; //群id
+        uint64 activityId = 2; //活动id
+    }
+    message Reply {
+        GroupActivityDetail activity = 1;
+    }
+}
+//创建活动
+message CreateGroupActivity {
+    int32 rpcId = 100102;
+    message Request {
+        uint64 uid = 1; //发送者的id--客户端不用设置
+        uint64 gid = 2; //群id
+        string activityTitle = 3; //活动标题
+        string activityDes = 4; //活动描述
+        int64 beginTime = 5; //开始的时间戳
+        int64 endTime = 6; //结束的时间戳
+    }
+    message Reply {
+        GroupActivitySummary activity = 1;
+    }
+}
+//修改活动信息
+message UpdateGroupActivity {
+    int32 rpcId = 100103;
+    message Request {
+        uint64 uid = 1; //发送者的id--客户端不用设置
+        uint64 gid = 2; //群id
+        uint64 activityId = 3; //活动id
+        string activityTitle = 4; //活动标题
+        string activityDes = 5; //活动描述
+        int64 beginTime = 6; //开始的时间戳
+        int64 endTime = 7; //结束的时间戳
+    }
+    message Reply {
+        GroupActivitySummary activity = 1;
+    }
+}
+//删除活动
+message DeleteGroupActivity {
+    int32 rpcId = 100104;
+    message Request {
+        uint64 uid = 1; //发送者的id--客户端不用设置
+        uint64 gid = 2; //群id
+        uint64 activityId = 3; //活动id
+    }
+    message Reply {}
+}
+//玩家报名参与活动~参加和修改都用这个
+message SignUpGroupActivity {
+    int32 rpcId = 100105;
+    message Request {
+        uint64 uid = 1; //发送者的id--客户端不用设置
+        uint64 gid = 2; //群id
+        uint64 activityId = 3; //活动id
+        string remark = 4; //备注
+    }
+    message Player {
+        uint64 uid = 1; //报名的uid
+        string remark = 2; //备注信息
+    }
+    message Reply {
+        Player player = 1;
+    }
+}
+//玩家取消报名
+message SignOutGroupActivity {
+    int32 rpcId = 100106;
+    message Request {
+        uint64 uid = 1; //发送者的id--客户端不用设置
+        uint64 gid = 2; //群id
+        uint64 activityId = 3; //活动id
+    }
+    message Reply {}
+}
+//广播活动信息到群聊天群
+message BroadcastGroupActivityInfo {
+    int32 rpcId = 100107;
+    message Request {
+        uint64 uid = 1; //发送者的id--客户端不用设置
+        uint64 gid = 2; //群id
+        uint64 activityId = 3; //活动id
+    }
+    message Reply {}
+}
+//广播上麦信息到群聊天群和个推
+message BroadcastGroupActivityOnMic {
+    int32 rpcId = 100108;
+    message Request {
+        uint64 uid = 1; //发送者的id--客户端不用设置
+        uint64 gid = 2; //群id
+        uint64 activityId = 3; //活动id
+    }
+    message Reply {}
+}

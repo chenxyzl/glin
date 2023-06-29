@@ -1,0 +1,16 @@
+# Default ignored files
+**.pid
+**.exe
+**.log
+**.bin
+**.dart
+**.json
+**.base64
+/bin/gate
+/bin/group
+/bin/hall
+/bin/home
+/bin/web
+/bin/wechat
+/proto_file/gen-dart.zip
+/node_modules/

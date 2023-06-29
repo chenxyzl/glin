@@ -1,0 +1,14 @@
+sdk:
+  mode: http
+#  logLevel: debug
+http:
+  addr: https://xxx # 国内地址，国际: https://mcs.tobsnssdk.com
+appKeys:
+  111: xxx
+#openapi:
+#  addr: https://analytics.volcengineapi.com # 国内地址，国际: https://analytics.byteplusapi.com
+#  ak: ${OPENAPI_AK}
+#  sk: ${OPENAPI_SK}
+#asyn:
+#  routine: 20   #建议小于1024，并发数目
+#  queueSize: 10240

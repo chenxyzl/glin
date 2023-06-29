@@ -1,0 +1,64 @@
+syntax = "proto3";
+package inner;
+option  go_package = "laiya/proto/inner";
+
+//首次添加机器人
+message Gr2RoAddRobot {
+    message Notify {}
+}
+//@机器人的聊天消息
+message Gr2RoAtRobotChatMsg {
+    message Notify {
+        uint64 sendUid = 1; //发送着id
+        string content = 2; //消息内容
+    }
+}
+//机器人说的聊天消息
+message Ro2GrRobotSayChatMsg {
+    message Notify {
+        uint64 robotId = 1; //机器人自身
+        uint64 replyToUid = 2; //回复发送者 0表示无回复对象
+        string content = 3; //消息内容
+    }
+}
+//摇人--老版
+message Gr2RoLookingPlayer{
+    message Notify {
+        uint64 uid = 1; //谁触发的
+        string groupName = 2; //群名
+        string groupVoiceName = 3; //群语音名字
+        string gameType = 4; //游戏类型
+    }
+}
+//在麦上的玩家的人数变化
+message Gr2RoOnMicPlayerCountChanged{
+    message Notify {
+        uint32 onMicPlayerCount = 1;
+    }
+}
+//摇人--新版
+message Gr2RoNeedInviteBroadcast{
+    message Notify {
+        uint64 uid = 1; //谁触发的
+        string groupName = 2; //群名
+        string groupVoiceName = 3; //群语音名字
+        string gameType = 4; //游戏类型
+    }
+}
+//通知微信群--找人
+message Ro2WechatLookingPlayer {
+    message Notify {
+        uint64 gid = 1; //通过uid来生成分享链接
+        int32 onMicCount = 2; //在麦人数
+    }
+}
+//通知微信群--定时广播需要玩家的group
+message Ro2WechatGroupState {
+    message GroupState {
+        uint64 gid = 1; //通过uid来生成分享链接
+        int32 onMicCount = 2; //在麦人数
+    }
+    message Notify {
+        repeated GroupState groups = 1;
+    }
+}

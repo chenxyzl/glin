@@ -1,0 +1,9 @@
+syntax = "proto3";
+package gm;
+option  go_package = "laiya/proto/gm";
+import "google/protobuf/descriptor.proto";
+//自定义的文件级别可选想
+extend google.protobuf.FileOptions {
+    string router = 50001;
+}
+option (router) = "gm";

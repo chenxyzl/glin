@@ -1,0 +1,66 @@
+#一些常量配置
+#默认icon
+UserDefaultIcon = "https://xxx.jpeg"
+#名字长度--最小
+UserNameLenMin = 1
+#名字长度--最大
+UserNameLenMax = 12
+#玩家描述长度--最大
+UserDesLenMax = 50
+#群名长度--最小
+GroupNameLenMin = 2
+#群名长度--最大
+GroupNameLenMax = 20
+#群描述长度--最大
+GroupDesLenMax = 50
+#语音房间长度--最小
+VoiceRoomNameLenMin = 2
+#语音房间长度--最大
+VoiceRoomNameLenMax = 20
+#默认语音房名字
+DefaultVoiceRoomName = "语音车队"
+#聊天记录-历史最大条数
+MaxChatHistory = 100
+#单人的最大群数量
+MaxGroupCount = 50
+#单人的最大可创建的群数量
+MaxCreateGroupCount = 3
+#群-最大人数
+GroupPlayerMaxCount = 10000 #不能
+#群最大同时在线人数
+GroupOnlineLimit = 10000 #不能超过65536
+#聊天-字数-最多
+ChatMaxLen = 100
+#测试账号
+GodAcc = ["13123456789", "13000000000"]
+#测试token
+GodCaptcha = "9999"
+#在线超时检测时间【session】
+HeartbeatCheck = "45s"
+#Player实体离线多长时间后销毁
+PlayerTerminateIdleTime = "120s"
+#Group实体空闲多久后销毁
+GroupTerminateIdleTime = "120s"
+#聊天缓存条数
+ChatCacheSize = 100
+#群聊最大保存时间
+GroupChatKeepTime = "720h" #30天内的最多100条
+#私聊缓存条数
+PrivateChatCacheSize = 100
+#私聊最大保存时间
+PrivateChatKeepTime = "720h" #30天内的最多100条
+#超期后私聊最小保存条数(例:保留最少1条后,删除30天以前的消息)
+PrivateChatKeepSize = 1
+#私信的标题
+PrivateChatTitle = "私信"
+#群活动插件-最大保留活动条数
+GroupPluginActivityMaxCount = 100
+#群活动标题最小长度
+GroupPluginActivityTitleMinLen = 1
+#群活动标题最大长度
+GroupPluginActivityTitleMaxLen = 40
+#群活动描述最大长度
+GroupPluginActivityDesMaxLen = 200
+#群活动报名的备注最大长度
+GroupPluginActivitySignUpRemarkMaxLen = 100
+

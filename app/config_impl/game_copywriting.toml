@@ -1,0 +1,135 @@
+#对应的游戏类型--没配置的的游戏都读取这个配置
+
+#############################文案公共文案#############################
+#私聊回复
+WechatPrivateReply = """
+hello[Twirl]
+可在来鸭APP召唤我摇人组队哈
+（下载地址：www.xxx.com）
+"""
+#帮助-未识别的命令
+WechatHelper = """
+[Lightning] 二鸭指南奉上 [Lightning]
+————————————
+@我，回复“有车吗”，查询在玩车队
+在来鸭APP中，可召唤我为你组队摇人哈
+————————————
+"""
+GroupNotConfigGameType = "该群没有配置游戏类型，请联系管理员" #未设置游戏类型
+RobotNotActive = "该机器人未激活" #机器人未激活
+WaitingInviteBroadcast0 = "正在微信群中发送本房间摇人消息（微信群发30分钟可用一次）"
+WaitingInviteBroadcast1 = "正在app内为你匹配玩家" #等待用户 1
+WaitingInviteBroadcast2 = "平均10-15分钟可以组到人,挂麦等待一会儿哦，^_^" #等待用户 2
+WechatUpdateInfoSuccess = "更新完成"
+LookingNotifyInterval = "本房间距离上次微信群摇人间隔不足30分钟"
+LookingNotifyWaiting = "在麦上等待30秒后为你在微信群寻找其他玩家"
+#############################游戏特有文案#############################
+#---------------默认文案,未配置游戏类型的都会走这个文案---------------#
+[Copywriting."其他"]
+GroupHelper = """
+hello，上麦后，我会在厨房的微信群中，发送本房间的组队信息哦
+
+  本房间摇人功能：开启
+
+  【我的使用指南】
+  1、开启摇人：@我，并发送指令“开启摇人”
+  2、停止摇人：@我，并发送指令“停止摇人”
+
+  加厨房微信群，联系管理员哈"""
+NotFoundGroup = """
+当前没有合适的车队
+
+在来鸭APP中，可召唤我为你组队摇人哈"""
+LookingNotifySuccess = "已为你发送到微信群,请耐心等待其他玩家"
+LookingNotifyWechat = """
+【%s】%s %s  %d人在线
+摇人摇人 [Twirl]"""
+TimerNotifyWechatItem = "【%s】%s %s %d人在线"
+TimerNotifyWechat = """
+二鸭来摇人喽 [JumpRope]
+%s
+
+如果没有合适的车队
+在来鸭APP召唤我为你摇人组队哈
+"""
+LookingGroupItem = "【%s】%s %s %d人在线"
+LookingGroup = """
+ [JumpRope]找到%d个在玩车队：
+%s
+
+如果没有合适的队伍，在来鸭APP召唤我为你摇人组队哈"""
+OnMicPlayer0Guide = ""
+OnMicPlayer1Guide = ""
+#---------------胡闹厨房2/全都好吃---------------#
+[Copywriting."胡闹厨房2/全都好吃"]
+GroupHelper = """
+hello，上麦后，我会在厨房的微信群中，发送本房间的组队信息哦
+
+  本房间摇人功能：开启
+
+  【我的使用指南】
+  1、开启摇人：@我，并发送指令“开启摇人”
+  2、停止摇人：@我，并发送指令“停止摇人”
+
+  加厨房微信群，联系管理员哈"""
+NotFoundGroup = """
+当前没有合适的车队
+
+在来鸭APP中，可召唤我为你组队摇人哈"""
+LookingNotifySuccess = "已为你发送到微信厨房群,请耐心等待其他玩家"
+LookingNotifyWechat = """
+【%s】%s %s  %d人在线
+摇人摇人 [Twirl]"""
+TimerNotifyWechatItem = "【%s】%s %s %d人在线"
+TimerNotifyWechat = """
+二鸭来摇人喽 [JumpRope]
+%s
+
+如果没有合适的车队
+在来鸭APP召唤我为你摇人组队哈
+"""
+LookingGroupItem = "【%s】%s %s %d人在线"
+LookingGroup = """
+ [JumpRope]找到%d个在玩车队：
+%s
+
+如果没有合适的队伍，在来鸭APP召唤我为你摇人组队哈"""
+OnMicPlayer0Guide = "上麦后，将为你组队摇人哦"
+OnMicPlayer1Guide = "上麦加入队伍一起玩"
+
+#---------------动物派对---------------#
+[Copywriting."动物派对"]
+GroupHelper = """
+hello，上麦后，我会在动物派对的微信群中，发送本房间的组队信息哦
+
+  本房间摇人功能：开启
+
+  【我的使用指南】
+  1、开启摇人：@我，并发送指令“开启摇人”
+  2、停止摇人：@我，并发送指令“停止摇人”
+
+  加动物派对微信群，联系管理员哈"""
+NotFoundGroup = """
+当前没有合适的车队
+
+在来鸭APP中，可召唤我为你组队摇人哈"""
+LookingNotifySuccess = "已为你发送到微信动物派对群,请耐心等待其他玩家"
+LookingNotifyWechat = """
+【%s】%s %s  %d人在线
+摇人摇人 [Twirl]"""
+TimerNotifyWechatItem = "【%s】%s %s %d人在线"
+TimerNotifyWechat = """
+二鸭来摇人喽 [JumpRope]
+%s
+
+如果没有合适的车队
+在来鸭APP召唤我为你摇人组队哈
+"""
+LookingGroupItem = "【%s】%s %s %d人在线"
+LookingGroup = """
+ [JumpRope]找到%d个在玩车队：
+%s
+
+如果没有合适的队伍，在来鸭APP召唤我为你摇人组队哈"""
+OnMicPlayer0Guide = "上麦后，将为你组队摇人哦"
+OnMicPlayer1Guide = "上麦加入队伍一起玩"

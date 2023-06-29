@@ -1,0 +1,31 @@
+syntax = "proto3";
+package inner;
+option  go_package = "laiya/proto/inner";
+
+//大厅通知微信群--群状态--找人
+message Ha2WechatLookingMsg {
+    message Group {
+        uint64 gid = 1;
+        string groupName = 2;
+        string voiceRoomName = 3;
+        uint32 playerCount = 4;
+    }
+    message Notify {
+        string gameType = 1;
+        repeated Group groups = 2;
+    }
+}
+
+//群机器人通知微信群--
+message Ro2WechatLookingMsg {
+    message Group {
+        uint64 gid = 1;
+        string groupName = 2;
+        string groupVoiceName = 3;
+        uint32 playerCount = 4;
+    }
+    message Notify {
+        string gameType = 1;
+        Group group = 2;
+    }
+}

@@ -1,0 +1,46 @@
+#web节点配置
+
+#验证码
+CaptchaExpireTime = "120s" #验证码过期时间
+CaptchaReqIntervalTime = "60s" #验证码获取间隔
+
+#短信 --warning 切换
+smsAccessKeyId = "xxx"
+smsAccessKeySecret = "xxx"
+smsEndpoint = "xxx"
+smsSignName = "xxx"
+smsTemplateCode = "xxx"
+
+#oss头像 --warning 切换
+HeadOssBuket.OssBuketName = "xxx"
+HeadOssBuket.OssKey       = "xxx"
+HeadOssBuket.OssSecret    = "xxx"
+HeadOssBuket.OssEndpoint  = "xxx"
+
+#oss聊天图片 --warning 切换
+PicOssBuket.OssBuketName = "xxx"
+PicOssBuket.OssKey       = "xxx"
+PicOssBuket.OssSecret    = "xxx"
+PicOssBuket.OssEndpoint  = "xxx"
+
+#长短链接 --warning 切换
+ShorUrlGroup = "s"
+ShortUrl = "https://xxx.com"
+LongUrl = "https://xxx.com/share?appUrl=xxxapp://detail/room?roomId="
+
+#getui --warning 切换
+GeTuiAppId = "xxx"
+GeTuiAppKey = "xxx"
+GeTuiAppSecret = "xxx"
+GeTuiMasterSecret = "xxx"
+GeTuiSettings.TTL = 3600000 #单位毫秒
+GeTuiSettings.Speed = 0
+GeTuiSettings.ScheduleTime = 0
+GeTuiSettings.Strategy.Default = 1
+GeTuiSettings.Strategy.Ios = 4
+GeTuiSettings.Strategy.St = 4
+GeTuiSettings.Strategy.Hw = 4
+GeTuiSettings.Strategy.Xm = 4
+GeTuiSettings.Strategy.Vv = 4
+GeTuiSettings.Strategy.Mz = 4
+GeTuiSettings.Strategy.Op = 4

@@ -1,0 +1,15 @@
+#摇人的游戏类型
+InviteBroadcastGameTypes = """
+["胡闹厨房2/全都好吃"]
+"""
+GroupPermissions = """{
+	"GroupPermissions": {
+		"1": "普通用户",
+		"2": "管理员"
+	},
+	"Access": {
+		"1": "设置管理员权限",
+		"2": "静音其他用户"
+	}
+}
+"""

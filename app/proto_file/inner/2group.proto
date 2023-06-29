@@ -1,0 +1,84 @@
+syntax = "proto3";
+package inner;
+option  go_package = "laiya/proto/inner";
+
+import "actor/actor.proto";
+
+//用户上线
+message Ho2GrPlayerOnline {
+    message Request {
+        uint64 uid = 1;
+        actor.PID session = 2; //
+    }
+    message Reply {
+        uint64 lastChatId = 1;
+    }
+}
+//用户离线
+message Ho2GrPlayerOffline {
+    message Request {
+        uint64 uid = 1;
+        actor.PID session = 2;
+    }
+    message Reply {}
+}
+//用户在线的心跳
+message Ho2GrPlayerHeartbeat {
+    message Request {
+        uint64 uid = 1;
+    }
+    message Reply {}
+}
+//创建群
+message Ho2GrCreateGroup{
+    message Player {
+        uint64 uid = 1;
+        actor.PID session = 2; //
+    }
+    message Request {
+        Player owner = 1;//创建者
+        string groupName = 2; //群名字
+        string groupIcon = 3; //群icon
+        string groupDes = 4; //群描述
+        string gameType = 5; //游戏类型
+    }
+    message Reply {}
+}
+//加入群【注: 其实就是添加到收藏列表】
+message Ho2GrFavoriteGroup{
+    message Request {
+        uint64 uid = 1;
+    }
+    message Reply {
+        bool transferOwner = 1 ; //是否转移拥有者~机器人创建的群转移给第一个进入的玩家
+    }
+}
+//退出群【注: 退出后不在群，离开只是当前不在】
+message Ho2GrUnfavoriteGroup{
+    message Request {
+        uint64 uid = 1;
+    }
+    message Reply {}
+}
+//解散群
+message Ho2GrDisbandGroup{
+    message Request {
+        uint64 uid = 1;
+    }
+    message Reply {}
+}
+//进入群 【注: 进入表示当前在某个群。只有当前所在才能收到部分推送】
+message Ho2GrEnterGroup{
+    message Request {;
+        actor.PID session = 1;
+        uint64 uid = 2;
+    }
+    message Reply {}
+}
+//离开群 【注: 退出后不在群，离开只是当前不在】
+message Ho2GrExitGroup{
+    message Request {
+        uint64 uid = 1;
+    }
+    message Reply {}
+}

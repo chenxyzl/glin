@@ -1,0 +1,76 @@
+syntax = "proto3";
+package outer;
+option  go_package = "laiya/proto/outer";
+import "google/protobuf/any.proto";
+message ChatMsg {
+  enum FromType {
+    UnknownFromType = 0; //未知
+    Friend = 1; //私聊
+    Group = 2; //群
+  }
+  uint64 msgId = 1; //消息连续自增id
+  FromType fromType = 2; //消息来源类型
+  MsgType msgType = 3; //消息内容类型
+  uint64 fromId = 4; //来源的id--私聊是发送方Id,群群消息是群id
+  uint64 senderId = 5; //消息发送者的Id--私聊是发送放Id,群消息也是发送方id
+  uint64 toId = 6; //发送给谁
+  int64 time = 7; //发送时间
+  google.protobuf.Any Content = 8; //消息内容--内部有个TypeUrl--标记了数据类型
+  repeated uint64 at = 9; //@的对象 注: 0表示@全部
+  uint64 uuid = 10; //唯一id
+  uint64 rId = 11; //客户端的roomId(群聊取群id，私聊为对方的uid)，对服务器来说无意义，纯客户但使用
+
+  /*---------------------聊天具体的内容---------------------*/
+  //内容类型
+  enum MsgType {
+    UnknownMsgType = 0; //未知
+    Normal = 1; //普通聊天消息
+    CreateGroup = 2 ; //创建了群
+    FavoriteGroup = 3; //收藏了群
+    AddRobot = 4;//增加了机器人
+    RobotSay = 5; //机器人说话
+    Pic = 6; //图片消息
+    GroupActivity = 7; //群活动
+  }
+  //普通聊天消息
+  message NormalMsg {
+    string text = 1;
+    string senderName = 2; //发送者的名字(群聊才有)--临时协议,后续客户端有缓存更新方案后，这里要去掉
+    string senderIcon = 3; //发送者的icon(群聊才有)--临时协议,后续客户端有缓存更新方案后，这里要去掉
+  }
+  //用户创建群
+  message CreateGroupMsg {
+    string userName = 1;
+  }
+  //用户收藏了群
+  message FavoriteGroupMsg {
+    string userName = 1;
+  }
+  //增加了机器人
+  message AddRobotMsg {
+    uint64 robotId = 1; //机器人id
+    string robotName = 2; //机器人名字
+    string robotIcon = 3; //机器人icon
+  }
+  //
+  message RobotSayMsg {
+    string text = 1;
+    string senderName = 2; //发送者的名字--临时协议,后续客户端有缓存更新方案后，这里要去掉
+    string senderIcon = 3; //发送者的icon--临时协议,后续客户端有缓存更新方案后，这里要去掉
+  }
+  //
+  message PicMsg {
+    string url = 1; //图片地址
+    string senderName = 2; //发送者的名字(群聊才有)--临时协议,后续客户端有缓存更新方案后，这里要去掉
+    string senderIcon = 3; //发送者的icon(群聊才有)--临时协议,后续客户端有缓存更新方案后，这里要去掉
+  }
+  //
+   message GroupActivityMsg {
+    string senderName = 1; //发送者的名字(群聊才有)--临时协议,后续客户端有缓存更新方案后，这里要去掉
+    string senderIcon = 2; //发送者的icon(群聊才有)--临时协议,后续客户端有缓存更新方案后，这里要去掉
+    uint64 activityId = 3; //活动id
+    string activityTitle = 4; //活动标题
+    int64 beginTime = 5; //开始时间戳
+    int64 endTime = 6;//结束时间戳
+   }
+}

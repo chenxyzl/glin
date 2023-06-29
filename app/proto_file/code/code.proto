@@ -1,0 +1,83 @@
+syntax = "proto3";
+package code;
+option  go_package = "laiya/proto/code";
+
+enum Code {
+    //base
+    UnknownErr = 0; //未知错误--dart对于新增的不能识别的枚举都会认为是对应的0的枚举值
+    Ok = 1;
+    Error = 2;                         //公共错误
+    InnerError = 3;                        //内部未知错误
+    InnerRpcError = 4;                        //内部未知错误
+    MsgUnmarshalErr = 5; //消息解析错误
+    UnsupportedMsgType = 6 ;//不支持的消息类型
+    NotImpl = 7; //未注册的消息
+    DataReadErr = 8; //data读取错误
+    RpcTimeout = 9; //消息处理超时
+    TokenNotExist = 10; //token不存在
+    TokenFormatErr = 11; //token格式错误
+    NotFoundMethod = 12; //没有找到接口
+    NotFoundComponent = 13; //没有找到接口
+    MsgDefineErr = 14; //消息定义错误
+    UidNotFound = 15; //没找到uid
+    NotFoundTargetId = 16; //没找到目标id
+    EnumNotFoundImpl = 17; //对应的枚举没找到实现
+    TokenErr = 18; //token错误
+    NoAccess = 19; //无权操作
+    RobotNotExist = 20; //机器人不存在
+    AppVersionNeedUpdate = 21; //app版本需要升级
+    GmAuthError = 22; //gm授权失败
+    ActorInitError = 23; //actor初始化错误--一定不能改(23关联到InitErrReceive)
+
+    //通用 10000~
+    UserNotExist = 10000; //user不存在
+    ChatLenLimit = 10008; //聊天内容过长
+    NowNotInGroup = 10009; //当前没有进入群
+    MustQuitAllGroupBefore = 10010; //必须先退出所有的群
+    GameTypeNotExist = 10011; //游戏类型不存在
+    PlatformTypeNotExist = 10012; //平台类型不存在
+
+    //20000 home
+    UserNameLenIllegal = 20001; //名字长度非法
+    UserDesLenIllegal = 20002; //描述长度非法
+    UpdateThirdPlatformInfoTypeNoExist = 20003; //更新第三方账户类型不存在
+
+    //30000~ 群
+    GroupNotExist = 30001; //群不存在
+    GroupCountFull = 30002; //所有群总数量已满
+    CreateGroupCountFull = 30003; //自己创建的群数量已满
+    SelfGroup = 30004; //自己的群
+    NotSelfGroup = 30005; //不是自己的群
+    NotInGroup = 30007; //不在群中
+    GroupIdFormatErr = 30101; //群id格式错误
+    GroupSubIdFull = 30102; //群的子id已用完
+    GroupPlayerFull = 30103; //群的人数已满
+    GroupNameLenIllegal = 30104; //名字长度非法
+    GroupDesLenIllegal = 30105; //描述长度非法
+    GroupOnlineFull = 30106; //群同时在线人数操作限制
+    JoinAccessDenied = 30107; //加入权限-被拒绝
+    VoiceRoomNameIllegal = 30108; //语音名字不合法
+    //35000~ 群插件-活动
+    GroupActivityNotExist = 35001; //群活动不存在
+    GroupActivityFull = 35002; //群活动已满
+    GroupActivityTimeIllegal = 35003; //群活动时间非法
+    GroupActivityExpired = 35004; //群活动已过期
+    GroupActivityTitleLenIllegal = 35005; //群活动标题长度不合法
+    GroupActivityDesLenIllegal = 35006; //群活动描述长度不合法
+    GroupActivitySignUpRewardLenIllegal = 35007; //群活动报名备注长度不合法
+
+    //90000 web错误
+    CaptchaTooFrequently = 90000; //验证码请求过于频繁
+    CaptchaExpire = 90001; //验证码过期
+    CaptchaNotEeq = 90002; //验证码错误
+    PhNotIllegal = 90003; //手机号非法
+    NotHasCaptcha = 90004; //当前并没有验证码
+    UrlFormatErr = 90005; //url格式错误
+    NotFoundUpdateFileNamedIcon = 90006; //没找到名为icon的上传文件
+    GeTuiCidIsEmpty = 90007;//个推的cid没有设置
+    GeTuiOpenPushErr = 90008; //个推推送开启失败
+    GeTuiClosePushErr = 90009; //个推关闭失败
+
+    //100000 微信
+    WechatWaitingLogin = 100000; //微信厨房还未启动完成
+}

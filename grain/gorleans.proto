@@ -1,0 +1,22 @@
+syntax = "proto3";
+package pb;
+option  go_package = "github.com/chenxyzl/glin/grain";
+
+//解决重入问题~
+message NextStep{}
+
+//Tick 每秒一次
+message Tick{}
+
+//Delay 延时一段时间后执行~
+message Delay {
+    uint64 id = 1; //函数id
+}
+//Repeat 循环执行~
+message Repeat {
+    uint64 id = 1; //函数id
+}
+//错误码
+message Error {
+    int32 code = 1; //因为包引用问题,这里使用数字 code.Code
+}
